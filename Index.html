@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Cata Lunar | Full Experience</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Cinzel (Vintage/Classic) & Quicksand (Modern/Clean) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Configuración de Tailwind para colores personalizados -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'lunar-dark': '#0f172a',
+                        'lunar-gold': '#d4af37',
+                        'fungi-green': '#3d5a45',
+                        'bamboo-light': '#e6e2d3',
+                        'purple-haze': '#2e2a3b'
+                    },
+                    fontFamily: {
+                        'display': ['Cinzel', 'serif'],
+                        'body': ['Quicksand', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'star-pattern': "url('https://www.transparenttextures.com/patterns/stardust.png')",
+                        'paper-texture': "url('https://www.transparenttextures.com/patterns/cream-paper.png')"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos Maximalistas y Aesthetic Personalizados */
+        body {
+            background-color: #050505;
+            color: #e6e2d3;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 5px;
+        }
+
+        /* Efecto de marco vintage para imágenes */
+        .vintage-frame {
+            position: relative;
+            padding: 10px;
+            border: 2px solid #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            transition: all 0.5s ease;
+        }
+        .vintage-frame::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            z-index: -1;
+        }
+        .vintage-frame:hover {
+            transform: scale(1.02) rotate(1deg);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+        }
+
+        /* Animaciones de aparición (Scroll Reveal) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animación de brillo lunar */
+        @keyframes moonGlow {
+            0% { text-shadow: 0 0 5px #fff; }
+            50% { text-shadow: 0 0 20px #d4af37, 0 0 30px #fff; }
+            100% { text-shadow: 0 0 5px #fff; }
+        }
+        .glow-text {
+            animation: moonGlow 3s infinite alternate;
+        }
+
+        /* Navegación Sticky con efecto glassmorphism */
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        /* Loader de fases lunares */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 1s ease;
+        }
+        .moon-phase {
+            font-size: 3rem;
+            color: #d4af37;
+            animation: spinMoon 2s linear infinite;
+        }
+        @keyframes spinMoon {
+            0% { content: '🌑'; transform: rotate(0deg); }
+            25% { content: '🌓'; }
+            50% { content: '🌕'; transform: rotate(180deg); }
+            75% { content: '🌗'; }
+            100% { content: '🌑'; transform: rotate(360deg); }
+        }
+
+        /* Estilos para el Oráculo */
+        .crystal-ball-glow {
+            box-shadow: 0 0 50px rgba(139, 92, 246, 0.2), inset 0 0 30px rgba(212, 175, 55, 0.1);
+            transition: all 0.5s ease;
+        }
+        .crystal-ball-glow:focus-within {
+            box-shadow: 0 0 80px rgba(139, 92, 246, 0.4), inset 0 0 50px rgba(212, 175, 55, 0.2);
+        }
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body class="font-body bg-star-pattern">
+
+    <!-- Preloader -->
+    <div id="loader">
+        <div class="moon-phase"><i class="fa-solid fa-moon"></i></div>
+        <h2 class="mt-4 font-display text-2xl text-lunar-gold tracking-widest">CARGANDO FASES...</h2>
+    </div>
+
+    <!-- Navegación -->
+    <nav class="glass-nav fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-3 group">
+                <!-- Logotipo SVG minimalista -->
+                <svg class="w-12 h-12 text-lunar-gold group-hover:rotate-12 transition-transform duration-700" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Luna Creciente Estilizada -->
+                    <path d="M40 10C20 15 5 35 15 65C25 95 60 95 80 75" stroke="#d4af37" fill="none" stroke-width="3"/>
+                    <!-- Copa/Hoja Abstracta en el centro -->
+                    <path d="M45 40 Q 60 40 75 40 L 60 80 L 45 40 Z" fill="#d4af37" opacity="0.8"/>
+                    <line x1="60" y1="80" x2="60" y2="95" stroke="#d4af37" stroke-width="2"/>
+                    <circle cx="60" cy="30" r="5" fill="#d4af37" class="animate-pulse"/>
+                </svg>
+                <div class="text-xl font-display font-bold tracking-widest text-white">
+                    CATA <span class="text-lunar-gold">LUNAR</span>
+                </div>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <ul class="hidden md:flex space-x-8 font-display text-sm tracking-widest">
+                <li><a href="#narrativa" class="hover:text-lunar-gold transition-colors">ORIGEN</a></li>
+                <li><a href="#experiencia" class="hover:text-lunar-gold transition-colors">EXPERIENCIA</a></li>
+                <li><a href="#menu" class="hover:text-lunar-gold transition-colors">MENÚ</a></li>
+                <li><a href="#oraculo" class="text-purple-400 hover:text-lunar-gold transition-colors animate-pulse"><i class="fa-solid fa-sparkles"></i> ORÁCULO</a></li>
+                <li><a href="#espacios" class="hover:text-lunar-gold transition-colors">ESPACIOS</a></li>
+                <li><a href="#contacto" class="hover:text-lunar-gold transition-colors">RESERVA</a></li>
+            </ul>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-2xl text-lunar-gold">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-lunar-dark border-t border-lunar-gold p-4 text-center">
+            <a href="#narrativa" class="block py-2 hover:text-lunar-gold">ORIGEN</a>
+            <a href="#menu" class="block py-2 hover:text-lunar-gold">MENÚ</a>
+            <a href="#oraculo" class="block py-2 text-purple-400 font-bold">ORÁCULO</a>
+            <a href="#espacios" class="block py-2 hover:text-lunar-gold">ESPACIOS</a>
+        </div>
+    </nav>
+
+    <!-- Header / Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Fondo con overlay -->
+        <div class="absolute inset-0 bg-[url('images/hero-lunar.jpg')] bg-cover bg-center opacity-40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-black"></div>
+        
+        <div class="relative z-10 text-center px-4 reveal active">
+            <p class="font-display text-lunar-gold text-lg mb-4 tracking-[0.5em] uppercase">Donde la magia florece</p>
+            <h1 class="font-display text-5xl md:text-8xl font-black text-white mb-6 glow-text leading-tight">
+                CATA <br> <span class="italic font-light">LUNAR</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-gray-300 mb-8 font-light italic text-lg">
+                "Una danza entre el micelio, el bambú y las mareas."
+            </p>
+            <a href="#menu" class="inline-block px-8 py-3 border border-lunar-gold text-lunar-gold font-display tracking-widest hover:bg-lunar-gold hover:text-black transition-all duration-300">
+                EXPLORAR CARTA
+            </a>
+        </div>
+        
+        <!-- Elemento decorativo flotante -->
+        <div class="absolute bottom-10 animate-bounce text-lunar-gold">
+            <i class="fa-solid fa-chevron-down text-2xl"></i>
+        </div>
+    </header>
+
+    <!-- 1. Narrativa (Origen) -->
+    <section id="narrativa" class="py-24 relative overflow-hidden">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="reveal vintage-frame">
+                <!-- Placeholder para imagen de narrativa -->
+                <div class="bg-gray-800 w-full h-[500px] flex items-center justify-center relative overflow-hidden">
+                    <img src="images/hero-lunar2.jpg" alt="Bosque de bambú místico" class="object-cover w-full h-full opacity-70 hover:scale-110 transition-transform duration-1000">
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <span class="text-white font-display text-2xl bg-black/50 px-4 py-2 border border-lunar-gold">EL ORIGEN</span>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal space-y-6 text-center md:text-left">
+                <i class="fa-solid fa-feather text-4xl text-lunar-gold"></i>
+                <h2 class="font-display text-4xl text-white">La Leyenda del Micelio Lunar</h2>
+                <div class="w-24 h-1 bg-lunar-gold mx-auto md:mx-0"></div>
+                <p class="text-gray-300 leading-relaxed text-lg">
+                    Restaurant Cata Lunar no nació de un plano arquitectónico, sino de un susurro en un bosque de bambú bajo la luna llena. Cuenta la leyenda que nuestro fundador descubrió un círculo de hongos bioluminiscentes que crecían en perfecta sincronía con las fases lunares.
+                </p>
+                <p class="text-gray-300 leading-relaxed text-lg">
+                    Inspirados por este milagro de la naturaleza, creamos un santuario culinario donde cada plato respeta el ciclo de la tierra. Aquí, el bambú estructura nuestro espacio, el reino fungi nutre nuestros platos y la luna guía nuestra creatividad.
+                </p>
+                <div class="flex gap-4 justify-center md:justify-start mt-6">
+                    <div class="text-center">
+                        <i class="fa-solid fa-moon text-lunar-gold text-xl"></i>
+                        <span class="block text-xs mt-1 text-gray-400">Cíclico</span>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa-solid fa-leaf text-fungi-green text-xl"></i>
+                        <span class="block text-xs mt-1 text-gray-400">Orgánico</span>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa-solid fa-wind text-gray-300 text-xl"></i>
+                        <span class="block text-xs mt-1 text-gray-400">Etéreo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Información General e Iconografía -->
+    <section class="py-16 bg-lunar-dark border-y border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal">
+                <div class="p-6 border border-gray-800 hover:border-lunar-gold transition-colors group">
+                    <i class="fa-solid fa-clock text-3xl text-lunar-gold mb-4 group-hover:spin"></i>
+                    <h3 class="font-display text-xl mb-2">Horario Nocturno</h3>
+                    <p class="text-sm text-gray-400">Lun - Dom: 18:00 - 02:00</p>
+                    <p class="text-xs text-gray-500 italic">"Cuando sale la luna"</p>
+                </div>
+                <div class="p-6 border border-gray-800 hover:border-lunar-gold transition-colors group">
+                    <i class="fa-solid fa-utensils text-3xl text-lunar-gold mb-4"></i>
+                    <h3 class="font-display text-xl mb-2">Cocina de Autor</h3>
+                    <p class="text-sm text-gray-400">Fusión Botánica</p>
+                    <p class="text-xs text-gray-500 italic">"Sabores de la tierra"</p>
+                </div>
+                <div class="p-6 border border-gray-800 hover:border-lunar-gold transition-colors group">
+                    <i class="fa-solid fa-wine-glass text-3xl text-lunar-gold mb-4"></i>
+                    <h3 class="font-display text-xl mb-2">Mixología Alquímica</h3>
+                    <p class="text-sm text-gray-400">Elixires lunares</p>
+                </div>
+                <div class="p-6 border border-gray-800 hover:border-lunar-gold transition-colors group">
+                    <i class="fa-solid fa-music text-3xl text-lunar-gold mb-4"></i>
+                    <h3 class="font-display text-xl mb-2">Atmósfera</h3>
+                    <p class="text-sm text-gray-400">Música ambiental en vivo</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Menú Creativo e Interactivo -->
+    <section id="menu" class="py-24 bg-[#0a0a0a] relative">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-purple-900 rounded-full blur-[100px] opacity-20"></div>
+        
+        <div class="container mx-auto px-6">
+            <h2 class="font-display text-4xl md:text-5xl text-center mb-4"><span class="text-lunar-gold">La Carta</span> del Eclipse</h2>
+            <p class="text-center text-gray-400 mb-12 font-body italic">Selecciona una fase para revelar los sabores</p>
+
+            <!-- Categorías del Menú (Tabs) -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12 reveal">
+                <button onclick="filterMenu('entradas')" class="menu-tab px-6 py-2 border border-lunar-gold text-lunar-gold hover:bg-lunar-gold hover:text-black transition-all active-tab uppercase tracking-widest text-sm">Entradas</button>
+                <button onclick="filterMenu('fuertes')" class="menu-tab px-6 py-2 border border-gray-600 text-gray-400 hover:border-lunar-gold hover:text-lunar-gold transition-all uppercase tracking-widest text-sm">Platos Fuertes</button>
+                <button onclick="filterMenu('pesados')" class="menu-tab px-6 py-2 border border-gray-600 text-gray-400 hover:border-lunar-gold hover:text-lunar-gold transition-all uppercase tracking-widest text-sm">Platos Pesados</button>
+                <button onclick="filterMenu('cocteles')" class="menu-tab px-6 py-2 border border-gray-600 text-gray-400 hover:border-lunar-gold hover:text-lunar-gold transition-all uppercase tracking-widest text-sm">Cócteles</button>
+                <button onclick="filterMenu('jugos')" class="menu-tab px-6 py-2 border border-gray-600 text-gray-400 hover:border-lunar-gold hover:text-lunar-gold transition-all uppercase tracking-widest text-sm">Jugos</button>
+                <button onclick="filterMenu('postres')" class="menu-tab px-6 py-2 border border-gray-600 text-gray-400 hover:border-lunar-gold hover:text-lunar-gold transition-all uppercase tracking-widest text-sm">Postres</button>
+            </div>
+
+            <!-- Contenedor del Grid del Menú -->
+            <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
+                <!-- El contenido se llena con JS -->
+            </div>
+            
+            <!-- Protocolo / Alergias -->
+            <div class="mt-16 p-6 border border-dashed border-gray-600 text-center text-gray-400 text-sm max-w-2xl mx-auto">
+                <h4 class="font-display text-lunar-gold mb-2">PROTOCOLO ALIMENTICIO</h4>
+                <p>Nuestros platos contienen hongos silvestres y nueces. Por favor, informe a su mesero sobre cualquier alergia. El protocolo de servicio incluye una limpieza espiritual con humo de salvia antes de la cena (opcional).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN NUEVA: El Oráculo Lunar (Gemini API Integration) -->
+    <section id="oraculo" class="py-24 relative overflow-hidden bg-[#0d0d14]">
+        <!-- Decoración de fondo -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-scales.png')] opacity-30"></div>
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-purple-700 rounded-full blur-[150px] opacity-20 animate-pulse"></div>
+        <div class="absolute top-40 right-10 w-64 h-64 bg-lunar-gold rounded-full blur-[120px] opacity-10"></div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="mb-8 reveal">
+                <i class="fa-solid fa-sparkles text-4xl text-purple-400 mb-4 animate-bounce"></i>
+                <h2 class="font-display text-4xl md:text-5xl text-white mb-2">El Oráculo <span class="text-purple-400">Lunar</span></h2>
+                <p class="text-gray-400 italic max-w-xl mx-auto">Confiesa tu estado de ánimo al espíritu del restaurante y deja que el micelio elija tu destino culinario.</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto bg-black/40 backdrop-blur-md border border-purple-900/50 p-8 rounded-xl crystal-ball-glow reveal">
+                <!-- Área de Input -->
+                <div class="mb-6 relative">
+                    <label for="userMood" class="block text-left text-xs text-lunar-gold uppercase tracking-widest mb-2 font-display">¿Cómo te sientes hoy?</label>
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <input type="text" id="userMood" placeholder="Ej: Melancólico, Energético, Enamorado, Cansado..." 
+                            class="flex-1 bg-[#1a1a24] border border-gray-700 text-white p-4 rounded-lg focus:border-purple-400 focus:outline-none transition-all placeholder-gray-600 font-body">
+                        <button onclick="consultarOraculo()" 
+                            class="bg-purple-900 hover:bg-purple-700 text-white px-8 py-4 rounded-lg font-display tracking-widest transition-all border border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.3)] flex items-center justify-center gap-2 group">
+                            <span>CONSULTAR</span>
+                            <i class="fa-solid fa-moon group-hover:rotate-180 transition-transform duration-500"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Área de Respuesta (Profecía) -->
+                <div id="oracleResponse" class="hidden min-h-[150px] border-t border-gray-800 pt-6 mt-6 text-left relative">
+                    <!-- Loading State -->
+                    <div id="oracleLoading" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/80 z-20">
+                        <i class="fa-solid fa-circle-notch fa-spin text-3xl text-purple-400 mb-2"></i>
+                        <span class="text-xs text-purple-200 tracking-widest animate-pulse">CONTACTANDO ESPÍRITUS...</span>
+                    </div>
+
+                    <!-- Contenido de la Profecía -->
+                    <div class="space-y-4">
+                        <h3 class="text-lunar-gold font-display text-xl flex items-center gap-2">
+                            <i class="fa-solid fa-scroll"></i> La Profecía:
+                        </h3>
+                        <p id="oracleText" class="text-gray-300 leading-relaxed font-light italic text-lg typing-cursor"></p>
+                        
+                        <!-- Botón para Text-to-Speech -->
+                        <div class="flex justify-end mt-4 pt-4 border-t border-dashed border-gray-800">
+                             <button id="speakBtn" onclick="speakProphecy()" class="text-xs flex items-center gap-2 text-gray-500 hover:text-purple-400 transition-colors uppercase tracking-widest disabled:opacity-50">
+                                <i class="fa-solid fa-volume-high"></i> Escuchar revelación
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Experiencia 5 Sentidos -->
+    <section id="experiencia" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="font-display text-4xl text-center mb-16">Full <span class="text-fungi-green">Sensory</span> Experience</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <!-- Vista -->
+                <div class="group relative h-80 overflow-hidden border border-gray-800 hover:border-lunar-gold transition-all cursor-pointer">
+                    <img src="images/5-sentidos-vista.jpg" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 group-hover:bg-black/30 transition-all">
+                        <i class="fa-solid fa-eye text-3xl mb-2 text-lunar-gold"></i>
+                        <h3 class="font-display tracking-widest">VISTA</h3>
+                        <p class="h-0 overflow-hidden group-hover:h-auto text-xs px-4 text-center mt-2 transition-all">Iluminación biodinámica que cambia con tu plato.</p>
+                    </div>
+                </div>
+                <!-- Oído -->
+                <div class="group relative h-80 overflow-hidden border border-gray-800 hover:border-lunar-gold transition-all cursor-pointer">
+                    <img src="images/5-sentidos-oido.jpg" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 group-hover:bg-black/30 transition-all">
+                        <i class="fa-solid fa-ear-listen text-3xl mb-2 text-lunar-gold"></i>
+                        <h3 class="font-display tracking-widest">OÍDO</h3>
+                        <p class="h-0 overflow-hidden group-hover:h-auto text-xs px-4 text-center mt-2 transition-all">Sonidos binaurales del bosque y viento en bambú.</p>
+                    </div>
+                </div>
+                 <!-- Olfato -->
+                 <div class="group relative h-80 overflow-hidden border border-gray-800 hover:border-lunar-gold transition-all cursor-pointer">
+                    <img src="images/5-sentidos-olfato.jpg" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 group-hover:bg-black/30 transition-all">
+                        <i class="fa-solid fa-wind text-3xl mb-2 text-lunar-gold"></i>
+                        <h3 class="font-display tracking-widest">OLFATO</h3>
+                        <p class="h-0 overflow-hidden group-hover:h-auto text-xs px-4 text-center mt-2 transition-all">Aromas de tierra húmeda y sándalo liberados en la mesa.</p>
+                    </div>
+                </div>
+                 <!-- Gusto -->
+                 <div class="group relative h-80 overflow-hidden border border-gray-800 hover:border-lunar-gold transition-all cursor-pointer">
+                    <img src="images/5-sentidos-gusto.jpg" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 group-hover:bg-black/30 transition-all">
+                        <i class="fa-solid fa-utensils text-3xl mb-2 text-lunar-gold"></i>
+                        <h3 class="font-display tracking-widest">GUSTO</h3>
+                        <p class="h-0 overflow-hidden group-hover:h-auto text-xs px-4 text-center mt-2 transition-all">Explosiones de Umami y texturas contrastantes.</p>
+                    </div>
+                </div>
+                 <!-- Tacto -->
+                 <div class="group relative h-80 overflow-hidden border border-gray-800 hover:border-lunar-gold transition-all cursor-pointer">
+                    <img src="images/5-sentidos-tacto.jpg" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 group-hover:bg-black/30 transition-all">
+                        <i class="fa-solid fa-hand-sparkles text-3xl mb-2 text-lunar-gold"></i>
+                        <h3 class="font-display tracking-widest">TACTO</h3>
+                        <p class="h-0 overflow-hidden group-hover:h-auto text-xs px-4 text-center mt-2 transition-all">Vajilla de piedra volcánica y cubiertos de bambú pulido.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Espacios y Zonas (Carrusel Automático) -->
+    <section id="espacios" class="py-24 bg-lunar-dark overflow-hidden">
+        <div class="container mx-auto px-6 mb-12">
+            <h2 class="font-display text-4xl text-left border-l-4 border-lunar-gold pl-4">Nuestros <br> Santuarios</h2>
+        </div>
+        
+        <!-- Contenedor del Carrusel -->
+        <div class="relative w-full overflow-hidden">
+            <div id="carousel-track" class="flex transition-transform duration-700 ease-in-out gap-4 px-6">
+                <!-- Los items del carrusel se generan con JS -->
+            </div>
+        </div>
+        
+        <!-- Referencias Visuales (Empaques, etc) -->
+        <div class="container mx-auto px-6 mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+             <div class="text-center reveal">
+                 <div class="w-16 h-16 mx-auto mb-4 border border-lunar-gold rounded-full flex items-center justify-center">
+                     <i class="fa-solid fa-box-open text-lunar-gold"></i>
+                 </div>
+                 <h4 class="font-display text-sm">Empaque Biodegradable</h4>
+             </div>
+             <div class="text-center reveal">
+                 <div class="w-16 h-16 mx-auto mb-4 border border-lunar-gold rounded-full flex items-center justify-center">
+                     <i class="fa-solid fa-wine-bottle text-lunar-gold"></i>
+                 </div>
+                 <h4 class="font-display text-sm">Cristalería Lunar</h4>
+             </div>
+             <div class="text-center reveal">
+                <div class="w-16 h-16 mx-auto mb-4 border border-lunar-gold rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-utensil-spoon text-lunar-gold"></i>
+                </div>
+                <h4 class="font-display text-sm">Cubiertos de Oro</h4>
+            </div>
+            <div class="text-center reveal">
+                <div class="w-16 h-16 mx-auto mb-4 border border-lunar-gold rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-shirt text-lunar-gold"></i>
+                </div>
+                <h4 class="font-display text-sm">Servilletas de Lino</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Ubicación y Contacto -->
+    <section id="contacto" class="py-24 relative bg-black">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12">
+            <div>
+                <h2 class="font-display text-4xl mb-8">Encuéntranos</h2>
+                <div class="space-y-6 font-light text-gray-300">
+                    <p><i class="fa-solid fa-location-dot text-lunar-gold w-8"></i> Calle del Eclipse 404, Zona Colonial</p>
+                    <p><i class="fa-solid fa-phone text-lunar-gold w-8"></i> +1 (809) 555-MOON</p>
+                    <p><i class="fa-solid fa-envelope text-lunar-gold w-8"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="76041305130400170536151702171a031817045815191b">[email&#160;protected]</a></p>
+                </div>
+                
+                <!-- Mapa Estático -->
+                <div class="mt-8 border border-gray-800 p-2 vintage-frame">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.576189524029!2d-69.8837266!3d18.4716768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eaf8801452249e7%3A0x67a3974416196f7e!2sSanto%20Domingo!5e0!3m2!1ses!2sdo!4v1700000000000!5m2!1ses!2sdo" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="opacity-70 grayscale hover:grayscale-0 transition-all"></iframe>
+                </div>
+            </div>
+            
+            <div class="bg-[#111] p-8 border border-gray-800">
+                <h3 class="font-display text-2xl mb-6 text-lunar-gold">Reserva tu experiencia</h3>
+                <form class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" placeholder="Nombre" class="w-full bg-black border border-gray-700 p-3 text-white focus:border-lunar-gold outline-none transition-colors">
+                        <input type="text" placeholder="Apellido" class="w-full bg-black border border-gray-700 p-3 text-white focus:border-lunar-gold outline-none transition-colors">
+                    </div>
+                    <input type="email" placeholder="Email" class="w-full bg-black border border-gray-700 p-3 text-white focus:border-lunar-gold outline-none transition-colors">
+                    <select class="w-full bg-black border border-gray-700 p-3 text-white focus:border-lunar-gold outline-none transition-colors">
+                        <option>Fase Lunar (Preferencia)</option>
+                        <option>Luna Nueva (Íntimo)</option>
+                        <option>Luna Llena (Celebración)</option>
+                    </select>
+                    <textarea rows="4" placeholder="Mensaje especial o alergias" class="w-full bg-black border border-gray-700 p-3 text-white focus:border-lunar-gold outline-none transition-colors"></textarea>
+                    <button type="submit" class="w-full bg-lunar-gold text-black font-bold py-3 hover:bg-white transition-colors tracking-widest">CONFIRMAR MESA</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-lunar-dark py-12 border-t border-gray-800 text-center">
+        <div class="mb-8">
+            <h2 class="font-display text-2xl text-lunar-gold">CATA LUNAR</h2>
+            <p class="text-xs text-gray-500 tracking-widest mt-2">EST. 2024</p>
+        </div>
+        <div class="flex justify-center gap-6 mb-8 text-gray-400">
+            <a href="#" class="hover:text-lunar-gold"><i class="fa-brands fa-instagram text-xl"></i></a>
+            <a href="#" class="hover:text-lunar-gold"><i class="fa-brands fa-facebook text-xl"></i></a>
+            <a href="#" class="hover:text-lunar-gold"><i class="fa-brands fa-tiktok text-xl"></i></a>
+        </div>
+        <p class="text-xs text-gray-600">© 2024 Restaurant Cata Lunar. Todos los derechos reservados. Diseñado bajo la luz de la luna.</p>
+    </footer>
+
+    <!-- Delivery Button Fixed -->
+    <button onclick="toggleDelivery()" class="fixed bottom-6 right-6 bg-fungi-green text-white p-4 rounded-full shadow-lg hover:bg-lunar-gold hover:text-black transition-all z-40 animate-pulse">
+        <i class="fa-solid fa-motorcycle text-xl"></i>
+    </button>
+
+    <!-- Modal Delivery -->
+    <div id="delivery-modal" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-[#111] border border-lunar-gold p-8 max-w-md w-full relative vintage-frame">
+            <button onclick="toggleDelivery()" class="absolute top-4 right-4 text-gray-500 hover:text-white"><i class="fa-solid fa-times text-xl"></i></button>
+            <div class="text-center">
+                <i class="fa-solid fa-box text-4xl text-lunar-gold mb-4"></i>
+                <h3 class="font-display text-2xl mb-2">Delivery Lunar</h3>
+                <p class="text-gray-400 mb-6 text-sm">Llevamos la experiencia a tu hogar con empaques biodegradables de bambú.</p>
+                <div class="space-y-3">
+                    <button class="w-full bg-green-600 hover:bg-green-500 text-white py-3 font-bold rounded flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+                    </button>
+                    <button class="w-full bg-orange-600 hover:bg-orange-500 text-white py-3 font-bold rounded flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-utensils"></i> Uber Eats
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT PREMIUM -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // API Configuration (Provided by runtime)
+        const apiKey = ""; 
+
+        // 1. DATA: Datos del Menú (6 items por categoría)
+        const menuData = {
+            entradas: [
+                { name: "Tartar de Luna", desc: "Atún rojo, polvo de sésamo y chips de yuca.", price: "$12", img: "images/entradas-tartar-lunar.jpg" },
+                { name: "Hongos Galácticos", desc: "Setas empanizadas en panko negro.", price: "$10", img: "images/entradas-hongos.jpg" },
+                { name: "Bambú Crujiente", desc: "Brotes de bambú asados con miso.", price: "$14", img: "images/entradas-bambu.jpg" },
+                { name: "Ceviche Eclipse", desc: "Leche de tigre negra y maíz cancha.", price: "$16", img: "images/entradas-ceviche.jpg" },
+                { name: "Gyozas Místicas", desc: "Rellenas de cerdo y trufa.", price: "$11", img: "images/entradas-gyozas.jpg" },
+                { name: "Carpaccio Estelar", desc: "Res fina con alcaparras doradas.", price: "$15", img: "images/entradas-carpaccio.jpg" }
+            ],
+            fuertes: [
+                { name: "Risotto Fungi", desc: "Arroz arborio, mezcla de 5 hongos y aceite de trufa.", price: "$22", img: "images/fuertes-risotto.jpg" },
+                { name: "Salmón Bambú", desc: "Cocido al vapor en hoja de bambú.", price: "$25", img: "images/fuertes-salmon.jpg" },
+                { name: "Pato Laqueado", desc: "Salsa de ciruela oscura y especias.", price: "$28", img: "images/fuertes-pato.jpg" },
+                { name: "Pasta Negra", desc: "Tinta de calamar y camarones.", price: "$24", img: "images/fuertes-pasta.jpg" },
+                { name: "Pollo Satay", desc: "Brochetas con salsa de maní.", price: "$19", img: "images/fuertes-pollo.jpg" },
+                { name: "Curry Verde", desc: "Vegetales asiáticos y leche de coco.", price: "$20", img: "images/fuertes-curry.jpg" }
+            ],
+            pesados: [
+                { name: "Tomahawk Lunar", desc: "Corte premium de 1kg a la brasa.", price: "$80", img: "images/pesados-tomahawk.jpg" },
+                { name: "Costillar BBQ", desc: "Bañado en salsa de mora.", price: "$45", img: "images/pesados-costillar.jpg" },
+                { name: "Lasagna Real", desc: "10 capas de carne y queso.", price: "$30", img: "images/pesados-lasagna.jpg" },
+                { name: "Ossobuco", desc: "Cocción lenta de 12 horas.", price: "$35", img: "images/pesados-ossobuco.jpg" },
+                { name: "Hamburguesa Titán", desc: "Doble carne, huevo y tocino.", price: "$22", img: "images/pesados-hamburguesa.jpg" },
+                { name: "Parrillada Mixta", desc: "Selección del chef para compartir.", price: "$60", img: "images/pesados-parrillada.jpg" }
+            ],
+            cocteles: [
+                { name: "Moonlight", desc: "Gin, violeta y polvo de plata.", price: "$12", img: "images/coctel-moonlight.jpg" },
+                { name: "Eclipse Rojo", desc: "Vodka, frutos rojos y humo.", price: "$14", img: "images/coctel-eclipse.jpg" },
+                { name: "Bamboo Mojito", desc: "Ron, menta, azúcar de caña.", price: "$10", img: "images/coctel-mojito.jpg" },
+                { name: "Sangría Oscura", desc: "Vino tinto, moras y brandy.", price: "$11", img: "images/coctel-sangria.jpg" },
+                { name: "Old Fashioned", desc: "Whisky ahumado en roble.", price: "$15", img: "images/coctel-oldfashioned.jpg" },
+                { name: "Martini Expresso", desc: "Vodka y café de altura.", price: "$13", img: "images/coctel-martini.jpg" }
+            ],
+            jugos: [
+                { name: "Detox Lunar", desc: "Carbón activado y limón.", price: "$8", img: "images/jugo-detox.jpg" },
+                { name: "Pasión Roja", desc: "Sandía, fresa y albahaca.", price: "$7", img: "images/jugo-pasion.jpg" },
+                { name: "Verde Zen", desc: "Pepino, manzana y apio.", price: "$7", img: "images/jugo-zen.jpg" },
+                { name: "Cítrico Solar", desc: "Naranja, zanahoria y jengibre.", price: "$6", img: "images/jugo-solar.jpg" },
+                { name: "Limonada Coco", desc: "Limón fresco y crema de coco.", price: "$8", img: "images/jugo-limonada.jpg" },
+                { name: "Berry Mix", desc: "Arándanos, frambuesas y yogurt.", price: "$9", img: "images/jugo-berry.jpg" }
+            ],
+            postres: [
+                { name: "Esfera de Chocolate", desc: "Se derrite con salsa caliente.", price: "$12", img: "images/postre-esfera.jpg" },
+                { name: "Cheesecake Lunar", desc: "Queso de cabra e higos.", price: "$10", img: "images/postre-cheesecake.jpg" },
+                { name: "Tiramisú", desc: "Receta clásica italiana.", price: "$9", img: "images/postre-tiramisu.jpg" },
+                { name: "Mousse de Mango", desc: "Con texturas de coco.", price: "$8", img: "images/postre-mango.jpg" },
+                { name: "Volcán Matcha", desc: "Bizcocho caliente de té verde.", price: "$11", img: "images/postre-matcha.jpg" },
+                { name: "Helado Artesanal", desc: "Vainilla negra y sésamo.", price: "$7", img: "images/postre-helado.jpg" }
+            ]
+        };
+
+        const spaceData = [
+            { title: "La Cocina", img: "images/espacio-cocina.jpg" },
+            { title: "Área de Bar", img: "images/espacio-bar.jpg" },
+            { title: "Comedor Principal", img: "images/espacio-comedor.jpg" },
+            { title: "Show Cooking", img: "images/espacio-showcooking.jpg" },
+            { title: "Cava de Vinos", img: "images/espacio-cava-de-vinos.jpg" }
+        ];
+
+        // 2. FUNCIONES DE RENDERIZADO
+        const renderMenu = (category) => {
+            const grid = document.getElementById('menu-grid');
+            grid.innerHTML = ''; // Limpiar
+            
+            // Añadir animación de fade-out/in
+            grid.classList.remove('opacity-100');
+            grid.classList.add('opacity-0');
+
+            setTimeout(() => {
+                menuData[category].forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = "bg-[#111] border border-gray-800 p-4 hover:border-lunar-gold transition-all duration-300 group hover:-translate-y-2";
+                    card.innerHTML = `
+                        <div class="h-48 overflow-hidden mb-4 relative">
+                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-2 right-2 bg-black/70 text-lunar-gold px-2 py-1 font-display text-sm border border-lunar-gold">${item.price}</div>
+                        </div>
+                        <h3 class="font-display text-xl text-white mb-2 group-hover:text-lunar-gold">${item.name}</h3>
+                        <p class="text-gray-400 text-sm font-light">${item.desc}</p>
+                        <button class="mt-4 w-full border border-gray-700 text-xs py-2 uppercase tracking-widest hover:bg-lunar-gold hover:text-black transition-colors">Agregar</button>
+                    `;
+                    grid.appendChild(card);
+                });
+                grid.classList.remove('opacity-0');
+                grid.classList.add('opacity-100');
+            }, 300);
+        };
+
+        const filterMenu = (category) => {
+            // Actualizar botones
+            document.querySelectorAll('.menu-tab').forEach(btn => {
+                btn.classList.remove('border-lunar-gold', 'text-lunar-gold');
+                btn.classList.add('border-gray-600', 'text-gray-400');
+            });
+            event.target.classList.remove('border-gray-600', 'text-gray-400');
+            event.target.classList.add('border-lunar-gold', 'text-lunar-gold');
+            
+            renderMenu(category);
+        };
+
+        const renderSpaces = () => {
+            const track = document.getElementById('carousel-track');
+            spaceData.forEach(space => {
+                const card = document.createElement('div');
+                card.className = "min-w-[300px] h-[400px] relative border border-gray-700 vintage-frame overflow-hidden flex-shrink-0 group";
+                card.innerHTML = `
+                    <img src="${space.img}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                        <h3 class="font-display text-xl text-white border-b border-lunar-gold inline-block pb-1">${space.title}</h3>
+                    </div>
+                `;
+                track.appendChild(card);
+            });
+        };
+
+        // 3. FUNCIONES DE GEMINI API (Oráculo y Voz)
+        
+        // Función para llamar a Gemini (Texto)
+        async function consultarOraculo() {
+            const userMood = document.getElementById('userMood').value;
+            const responseDiv = document.getElementById('oracleResponse');
+            const loadingDiv = document.getElementById('oracleLoading');
+            const oracleText = document.getElementById('oracleText');
+            
+            if (!userMood) return alert("Por favor, confiesa tu estado de ánimo primero.");
+
+            // Mostrar estado de carga
+            responseDiv.classList.remove('hidden');
+            loadingDiv.classList.remove('hidden');
+            oracleText.innerHTML = "";
+
+            // Preparar menú simplificado para el prompt
+            const simpleMenu = {};
+            for (const cat in menuData) {
+                simpleMenu[cat] = menuData[cat].map(item => item.name).join(", ");
+            }
+
+            const prompt = `Actúa como el Oráculo místico del restaurante 'Cata Lunar', un lugar inspirado en la luna, hongos y bambú. 
+            El usuario se siente: '${userMood}'. 
+            Basado en este menú: ${JSON.stringify(simpleMenu)}, recomienda UN plato y UN cóctel/bebida.
+            Responde en español con un tono misterioso, esotérico y elegante. Usa metáforas de fases lunares o micelio.
+            Formato de respuesta (mantén los emojis):
+            🌙 *Tu destino culinario:* [Nombre del Plato] y [Nombre de Bebida].
+            🔮 *La revelación:* [Breve explicación poética de por qué esto sana o celebra su estado de ánimo].`;
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }]
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) throw new Error(data.error.message);
+                
+                const text = data.candidates[0].content.parts[0].text;
+                
+                // Mostrar resultado
+                loadingDiv.classList.add('hidden');
+                
+                // Efecto de tipeo simple
+                let i = 0;
+                oracleText.innerHTML = ""; // Reset
+                // Reemplazamos los saltos de línea y negritas para HTML
+                const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-purple-300">$1</strong>').replace(/\n/g, '<br>');
+                
+                oracleText.innerHTML = formattedText;
+                
+            } catch (error) {
+                console.error("Error en el oráculo:", error);
+                loadingDiv.classList.add('hidden');
+                oracleText.innerHTML = "La conexión con el espíritu se ha interrumpido. Inténtalo de nuevo más tarde.";
+            }
+        }
+
+        // Función para Texto a Voz (TTS)
+        async function speakProphecy() {
+            const textToSpeak = document.getElementById('oracleText').innerText;
+            const btn = document.getElementById('speakBtn');
+            
+            if (!textToSpeak) return;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Invocando voz...';
+
+            try {
+                // Prompt específico para que elmodelo genere audio (TTS)
+                // Usamos el modelo gemini-2.5-flash-preview-tts
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: "Di esto con un tono místico, suave y relajante, como un espíritu antiguo: " + textToSpeak }] }],                        generationConfig: {
+                            responseModalities: ["AUDIO"],
+                            speechConfig: {
+                                voiceConfig: {
+                                    prebuiltVoiceConfig: {
+                                        voiceName: "Kore" // Voz femenina suave y misteriosa
+                                    }
+                                }
+                            }
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                if (data.error) throw new Error(data.error.message);
+
+                // El audio viene en base64 PCM. Necesitamos convertirlo o reproducirlo.
+                // La API devuelve "inlineData" con mimeType "audio/pcm;rate=24000" (usualmente)
+                const audioData = data.candidates[0].content.parts[0].inlineData;
+                
+                // Función auxiliar para reproducir PCM (Simplificada para navegadores modernos que soporten WAV o decodificación cruda)
+                // Nota: Los navegadores no reproducen PCM crudo directamente en <audio>, necesitamos crear un WAV header o usar AudioContext.
+                // Usaremos una función simple para convertir a WAV Blob y reproducir.
+                playPCM(audioData.data);
+                
+                btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Reproduciendo...';
+                setTimeout(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Escuchar revelación'; }, 5000); // Reset visual
+
+            } catch (error) {
+                console.error("Error TTS:", error);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Error de voz';
+            }
+        }
+
+        // Utilidad para convertir base64 PCM a Audio reproducible
+        function playPCM(base64PCM) {
+            const binaryString = window.atob(base64PCM);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            
+            // Convertir a Int16Array (asumiendo 16-bit PCM)
+            const pcmData = new Int16Array(bytes.buffer);
+            
+            // Crear WAV header
+            const wavHeader = createWavHeader(pcmData.length * 2, 24000); // 24kHz es común en Gemini TTS
+            const wavBytes = new Uint8Array(wavHeader.length + pcmData.byteLength);
+            wavBytes.set(wavHeader);
+            wavBytes.set(new Uint8Array(pcmData.buffer), wavHeader.length);
+            
+            const blob = new Blob([wavBytes], { type: 'audio/wav' });
+            const url = URL.createObjectURL(blob);
+            const audio = new Audio(url);
+            audio.play();
+        }
+
+        function createWavHeader(dataLength, sampleRate) {
+            const buffer = new ArrayBuffer(44);
+            const view = new DataView(buffer);
+            
+            // RIFF chunk descriptor
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + dataLength, true);
+            writeString(view, 8, 'WAVE');
+            
+            // fmt sub-chunk
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true); // Subchunk1Size
+            view.setUint16(20, 1, true); // AudioFormat (1 = PCM)
+            view.setUint16(22, 1, true); // NumChannels (1 = Mono)
+            view.setUint32(24, sampleRate, true); // SampleRate
+            view.setUint32(28, sampleRate * 2, true); // ByteRate
+            view.setUint16(32, 2, true); // BlockAlign
+            view.setUint16(34, 16, true); // BitsPerSample
+            
+            // data sub-chunk
+            writeString(view, 36, 'data');
+            view.setUint32(40, dataLength, true);
+            
+            return new Uint8Array(buffer);
+        }
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+
+
+        // 4. LOGICA INTERACTIVA EXISTENTE (Ben's Checklist)
+        
+        // Loader
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 1000);
+            }, 2000); // Simular carga
+            
+            renderMenu('entradas'); // Cargar menú inicial
+            renderSpaces();
+        });
+
+        // Intersection Observer para Animaciones (Scroll Reveal)
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2');
+                nav.classList.remove('py-4');
+            } else {
+                nav.classList.add('py-4');
+                nav.classList.remove('py-2');
+            }
+        });
+
+        // Toggle Delivery Modal
+        function toggleDelivery() {
+            const modal = document.getElementById('delivery-modal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+    </script>
+</body>
+</html>
