@@ -5,18 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Cata Lunar | Full Experience</title>
     
-    <!-- Tailwind CSS -->
+  
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Cinzel (Vintage/Classic) & Quicksand (Modern/Clean) -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome Icons -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Configuración de Tailwind para colores personalizados -->
     <script>
         tailwind.config = {
             theme: {
@@ -151,13 +149,11 @@
 </head>
 <body class="font-body bg-star-pattern">
 
-    <!-- Preloader -->
     <div id="loader">
         <div class="moon-phase"><i class="fa-solid fa-moon"></i></div>
         <h2 class="mt-4 font-display text-2xl text-lunar-gold tracking-widest">CARGANDO FASES...</h2>
     </div>
 
-    <!-- Navegación -->
     <nav class="glass-nav fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="flex items-center gap-3 group">
@@ -175,7 +171,6 @@
                 </div>
             </a>
             
-            <!-- Desktop Menu -->
             <ul class="hidden md:flex space-x-8 font-display text-sm tracking-widest">
                 <li><a href="#narrativa" class="hover:text-lunar-gold transition-colors">ORIGEN</a></li>
                 <li><a href="#experiencia" class="hover:text-lunar-gold transition-colors">EXPERIENCIA</a></li>
@@ -185,13 +180,11 @@
                 <li><a href="#contacto" class="hover:text-lunar-gold transition-colors">RESERVA</a></li>
             </ul>
 
-            <!-- Mobile Menu Button -->
             <button id="mobile-menu-btn" class="md:hidden text-2xl text-lunar-gold">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
         
-        <!-- Mobile Menu Panel -->
         <div id="mobile-menu" class="hidden md:hidden bg-lunar-dark border-t border-lunar-gold p-4 text-center">
             <a href="#narrativa" class="block py-2 hover:text-lunar-gold">ORIGEN</a>
             <a href="#menu" class="block py-2 hover:text-lunar-gold">MENÚ</a>
@@ -200,9 +193,8 @@
         </div>
     </nav>
 
-    <!-- Header / Hero Section -->
     <header class="relative h-screen flex items-center justify-center overflow-hidden">
-        <!-- Fondo con overlay -->
+      
         <div class="absolute inset-0 bg-[url('images/hero-lunar.jpg')] bg-cover bg-center opacity-40"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-black"></div>
         
@@ -219,17 +211,15 @@
             </a>
         </div>
         
-        <!-- Elemento decorativo flotante -->
         <div class="absolute bottom-10 animate-bounce text-lunar-gold">
             <i class="fa-solid fa-chevron-down text-2xl"></i>
         </div>
     </header>
 
-    <!-- 1. Narrativa (Origen) -->
     <section id="narrativa" class="py-24 relative overflow-hidden">
         <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
             <div class="reveal vintage-frame">
-                <!-- Placeholder para imagen de narrativa -->
+              
                 <div class="bg-gray-800 w-full h-[500px] flex items-center justify-center relative overflow-hidden">
                     <img src="images/hero-lunar2.jpg" alt="Bosque de bambú místico" class="object-cover w-full h-full opacity-70 hover:scale-110 transition-transform duration-1000">
                     <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -265,7 +255,6 @@
         </div>
     </section>
 
-    <!-- 2. Información General e Iconografía -->
     <section class="py-16 bg-lunar-dark border-y border-gray-800">
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal">
@@ -295,7 +284,6 @@
         </div>
     </section>
 
-    <!-- 3. Menú Creativo e Interactivo -->
     <section id="menu" class="py-24 bg-[#0a0a0a] relative">
         <div class="absolute top-0 right-0 w-64 h-64 bg-purple-900 rounded-full blur-[100px] opacity-20"></div>
         
@@ -303,7 +291,6 @@
             <h2 class="font-display text-4xl md:text-5xl text-center mb-4"><span class="text-lunar-gold">La Carta</span> del Eclipse</h2>
             <p class="text-center text-gray-400 mb-12 font-body italic">Selecciona una fase para revelar los sabores</p>
 
-            <!-- Categorías del Menú (Tabs) -->
             <div class="flex flex-wrap justify-center gap-4 mb-12 reveal">
                 <button onclick="filterMenu('entradas')" class="menu-tab px-6 py-2 border border-lunar-gold text-lunar-gold hover:bg-lunar-gold hover:text-black transition-all active-tab uppercase tracking-widest text-sm">Entradas</button>
                 <button onclick="filterMenu('fuertes')" class="menu-tab px-6 py-2 border border-gray-600 text-gray-400 hover:border-lunar-gold hover:text-lunar-gold transition-all uppercase tracking-widest text-sm">Platos Fuertes</button>
@@ -313,12 +300,10 @@
                 <button onclick="filterMenu('postres')" class="menu-tab px-6 py-2 border border-gray-600 text-gray-400 hover:border-lunar-gold hover:text-lunar-gold transition-all uppercase tracking-widest text-sm">Postres</button>
             </div>
 
-            <!-- Contenedor del Grid del Menú -->
             <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
-                <!-- El contenido se llena con JS -->
+              
             </div>
             
-            <!-- Protocolo / Alergias -->
             <div class="mt-16 p-6 border border-dashed border-gray-600 text-center text-gray-400 text-sm max-w-2xl mx-auto">
                 <h4 class="font-display text-lunar-gold mb-2">PROTOCOLO ALIMENTICIO</h4>
                 <p>Nuestros platos contienen hongos silvestres y nueces. Por favor, informe a su mesero sobre cualquier alergia. El protocolo de servicio incluye una limpieza espiritual con humo de salvia antes de la cena (opcional).</p>
@@ -326,9 +311,8 @@
         </div>
     </section>
 
-    <!-- SECCIÓN NUEVA: El Oráculo Lunar (Gemini API Integration) -->
     <section id="oraculo" class="py-24 relative overflow-hidden bg-[#0d0d14]">
-        <!-- Decoración de fondo -->
+     
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-scales.png')] opacity-30"></div>
         <div class="absolute -top-40 -left-40 w-96 h-96 bg-purple-700 rounded-full blur-[150px] opacity-20 animate-pulse"></div>
         <div class="absolute top-40 right-10 w-64 h-64 bg-lunar-gold rounded-full blur-[120px] opacity-10"></div>
@@ -341,7 +325,7 @@
             </div>
 
             <div class="max-w-3xl mx-auto bg-black/40 backdrop-blur-md border border-purple-900/50 p-8 rounded-xl crystal-ball-glow reveal">
-                <!-- Área de Input -->
+            
                 <div class="mb-6 relative">
                     <label for="userMood" class="block text-left text-xs text-lunar-gold uppercase tracking-widest mb-2 font-display">¿Cómo te sientes hoy?</label>
                     <div class="flex flex-col md:flex-row gap-4">
@@ -355,22 +339,19 @@
                     </div>
                 </div>
 
-                <!-- Área de Respuesta (Profecía) -->
                 <div id="oracleResponse" class="hidden min-h-[150px] border-t border-gray-800 pt-6 mt-6 text-left relative">
-                    <!-- Loading State -->
+                  
                     <div id="oracleLoading" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/80 z-20">
                         <i class="fa-solid fa-circle-notch fa-spin text-3xl text-purple-400 mb-2"></i>
                         <span class="text-xs text-purple-200 tracking-widest animate-pulse">CONTACTANDO ESPÍRITUS...</span>
                     </div>
 
-                    <!-- Contenido de la Profecía -->
                     <div class="space-y-4">
                         <h3 class="text-lunar-gold font-display text-xl flex items-center gap-2">
                             <i class="fa-solid fa-scroll"></i> La Profecía:
                         </h3>
                         <p id="oracleText" class="text-gray-300 leading-relaxed font-light italic text-lg typing-cursor"></p>
                         
-                        <!-- Botón para Text-to-Speech -->
                         <div class="flex justify-end mt-4 pt-4 border-t border-dashed border-gray-800">
                              <button id="speakBtn" onclick="speakProphecy()" class="text-xs flex items-center gap-2 text-gray-500 hover:text-purple-400 transition-colors uppercase tracking-widest disabled:opacity-50">
                                 <i class="fa-solid fa-volume-high"></i> Escuchar revelación
@@ -382,13 +363,12 @@
         </div>
     </section>
 
-    <!-- 4. Experiencia 5 Sentidos -->
     <section id="experiencia" class="py-24 relative">
         <div class="container mx-auto px-6">
             <h2 class="font-display text-4xl text-center mb-16">Full <span class="text-fungi-green">Sensory</span> Experience</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-                <!-- Vista -->
+               
                 <div class="group relative h-80 overflow-hidden border border-gray-800 hover:border-lunar-gold transition-all cursor-pointer">
                     <img src="images/5-sentidos-vista.jpg" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity">
                     <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 group-hover:bg-black/30 transition-all">
@@ -397,7 +377,7 @@
                         <p class="h-0 overflow-hidden group-hover:h-auto text-xs px-4 text-center mt-2 transition-all">Iluminación biodinámica que cambia con tu plato.</p>
                     </div>
                 </div>
-                <!-- Oído -->
+               
                 <div class="group relative h-80 overflow-hidden border border-gray-800 hover:border-lunar-gold transition-all cursor-pointer">
                     <img src="images/5-sentidos-oido.jpg" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity">
                     <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 group-hover:bg-black/30 transition-all">
@@ -406,7 +386,7 @@
                         <p class="h-0 overflow-hidden group-hover:h-auto text-xs px-4 text-center mt-2 transition-all">Sonidos binaurales del bosque y viento en bambú.</p>
                     </div>
                 </div>
-                 <!-- Olfato -->
+             
                  <div class="group relative h-80 overflow-hidden border border-gray-800 hover:border-lunar-gold transition-all cursor-pointer">
                     <img src="images/5-sentidos-olfato.jpg" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity">
                     <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 group-hover:bg-black/30 transition-all">
@@ -415,7 +395,7 @@
                         <p class="h-0 overflow-hidden group-hover:h-auto text-xs px-4 text-center mt-2 transition-all">Aromas de tierra húmeda y sándalo liberados en la mesa.</p>
                     </div>
                 </div>
-                 <!-- Gusto -->
+              
                  <div class="group relative h-80 overflow-hidden border border-gray-800 hover:border-lunar-gold transition-all cursor-pointer">
                     <img src="images/5-sentidos-gusto.jpg" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity">
                     <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 group-hover:bg-black/30 transition-all">
@@ -424,7 +404,7 @@
                         <p class="h-0 overflow-hidden group-hover:h-auto text-xs px-4 text-center mt-2 transition-all">Explosiones de Umami y texturas contrastantes.</p>
                     </div>
                 </div>
-                 <!-- Tacto -->
+           
                  <div class="group relative h-80 overflow-hidden border border-gray-800 hover:border-lunar-gold transition-all cursor-pointer">
                     <img src="images/5-sentidos-tacto.jpg" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-opacity">
                     <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 group-hover:bg-black/30 transition-all">
@@ -437,20 +417,17 @@
         </div>
     </section>
 
-    <!-- 5. Espacios y Zonas (Carrusel Automático) -->
     <section id="espacios" class="py-24 bg-lunar-dark overflow-hidden">
         <div class="container mx-auto px-6 mb-12">
             <h2 class="font-display text-4xl text-left border-l-4 border-lunar-gold pl-4">Nuestros <br> Santuarios</h2>
         </div>
         
-        <!-- Contenedor del Carrusel -->
         <div class="relative w-full overflow-hidden">
             <div id="carousel-track" class="flex transition-transform duration-700 ease-in-out gap-4 px-6">
-                <!-- Los items del carrusel se generan con JS -->
+            
             </div>
         </div>
         
-        <!-- Referencias Visuales (Empaques, etc) -->
         <div class="container mx-auto px-6 mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
              <div class="text-center reveal">
                  <div class="w-16 h-16 mx-auto mb-4 border border-lunar-gold rounded-full flex items-center justify-center">
@@ -479,7 +456,6 @@
         </div>
     </section>
 
-    <!-- 6. Ubicación y Contacto -->
     <section id="contacto" class="py-24 relative bg-black">
         <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12">
             <div>
@@ -490,7 +466,6 @@
                     <p><i class="fa-solid fa-envelope text-lunar-gold w-8"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="76041305130400170536151702171a031817045815191b">[email&#160;protected]</a></p>
                 </div>
                 
-                <!-- Mapa Estático -->
                 <div class="mt-8 border border-gray-800 p-2 vintage-frame">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.576189524029!2d-69.8837266!3d18.4716768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eaf8801452249e7%3A0x67a3974416196f7e!2sSanto%20Domingo!5e0!3m2!1ses!2sdo!4v1700000000000!5m2!1ses!2sdo" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="opacity-70 grayscale hover:grayscale-0 transition-all"></iframe>
                 </div>
@@ -516,7 +491,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-lunar-dark py-12 border-t border-gray-800 text-center">
         <div class="mb-8">
             <h2 class="font-display text-2xl text-lunar-gold">CATA LUNAR</h2>
@@ -530,12 +504,10 @@
         <p class="text-xs text-gray-600">© 2024 Restaurant Cata Lunar. Todos los derechos reservados. Diseñado bajo la luz de la luna.</p>
     </footer>
 
-    <!-- Delivery Button Fixed -->
     <button onclick="toggleDelivery()" class="fixed bottom-6 right-6 bg-fungi-green text-white p-4 rounded-full shadow-lg hover:bg-lunar-gold hover:text-black transition-all z-40 animate-pulse">
         <i class="fa-solid fa-motorcycle text-xl"></i>
     </button>
 
-    <!-- Modal Delivery -->
     <div id="delivery-modal" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-[#111] border border-lunar-gold p-8 max-w-md w-full relative vintage-frame">
             <button onclick="toggleDelivery()" class="absolute top-4 right-4 text-gray-500 hover:text-white"><i class="fa-solid fa-times text-xl"></i></button>
@@ -555,7 +527,6 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT PREMIUM -->
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // API Configuration (Provided by runtime)
         const apiKey = ""; 
